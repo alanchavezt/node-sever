@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const corsOptions = require('./config/corsOptions');
 const bodyParser = require('body-parser');
 const { logger } = require('./middleware/logEvents');
 const errorHandler = require('./middleware/errorHandler');
@@ -23,23 +24,14 @@ const PORT = process.env.PORT || 4000;
 app.use(logger);
 
 // enable Cross Origin Resource Sharing (CORS)
-const whitelist = ['https://www.yoursite.com', 'http://127.0.0.1:3000', 'http://localhost:4000', 'http://localhost:3000'];
-const corsOptions = {
-    origin: (origin, callback) => {
-        if (whitelist.indexOf(origin) !== -1 || !origin) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    optionsSuccessStatus: 200
-}
 app.use(cors(corsOptions));
 
 // parse application/json
 app.use(bodyParser.json());
-// parse application/x-www-form-urlencoded
+
+// parse application/x-www-form-urlencoded to handle form data
 app.use(bodyParser.urlencoded({ extended: true }));
+
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -68,49 +60,53 @@ app.use( (req, res, next) => {
 });
 
 
-/** request handlers */
-app.get('/', (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({success: false, message: 'Invalid user to access it.'});
-    }
-    res.send('Welcome to the Node.js! - ' + req.user.name);
-});
+// /** request handlers */
+// app.get('/', (req, res) => {
+//     if (!req.user) {
+//         return res.status(401).json({success: false, message: 'Invalid user to access it.'});
+//     }
+//     res.send('Welcome to the Node.js! - ' + req.user.name);
+// });
+//
+// /** verify the token and return it if it's valid */
+// app.get('/verifyToken', function (req, res) {
+//
+//     // check header or url parameters or post parameters for token
+//     const token = req.body.token || req.query.token;
+//
+//     if (!token) {
+//         return res.status(400).json({
+//             error: true,
+//             message: "Token is required."
+//         });
+//     }
+//
+//     return res.json({ user: {}, token });
+//
+//     // check token that was passed by decoding token using secret
+//     // jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
+//     //     if (err) return res.status(401).json({
+//     //         error: true,
+//     //         message: "Invalid token."
+//     //     });
+//     //
+//     //     // todo: retrieve the token from the database and compare tokens
+//     //     // return 401 status if the userId does not match.
+//     //     if (user.userId !== userData.userId) {
+//     //         return res.status(401).json({
+//     //             error: true,
+//     //             message: "Invalid user."
+//     //         });
+//     //     }
+//     //
+//     //     const userObj = utils.getCleanUser(userData);
+//     //     return res.json({ user: userObj, token });
+//     // });
+// });
 
-/** verify the token and return it if it's valid */
-app.get('/verifyToken', function (req, res) {
-
-    // check header or url parameters or post parameters for token
-    const token = req.body.token || req.query.token;
-
-    if (!token) {
-        return res.status(400).json({
-            error: true,
-            message: "Token is required."
-        });
-    }
-
-    return res.json({ user: {}, token });
-
-    // check token that was passed by decoding token using secret
-    // jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
-    //     if (err) return res.status(401).json({
-    //         error: true,
-    //         message: "Invalid token."
-    //     });
-    //
-    //     // todo: retrieve the token from the database and compare tokens
-    //     // return 401 status if the userId does not match.
-    //     if (user.userId !== userData.userId) {
-    //         return res.status(401).json({
-    //             error: true,
-    //             message: "Invalid user."
-    //         });
-    //     }
-    //
-    //     const userObj = utils.getCleanUser(userData);
-    //     return res.json({ user: userObj, token });
-    // });
-});
+/** Handling routes request for testing purposes */
+app.use('/', require('./routes/root'));
+app.use('/employees', require('./routes/api/employees'));
 
 /** Handling routes request API handlers */
 app.use('/API/signup', signupRoutes);
