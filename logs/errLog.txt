@@ -1,1 +1,0 @@
-20220824	16:41:50	bedddf47-a181-4d02-b4df-a7500e9c1bbb	Error: ENOENT: no such file or directory, stat '/Users/chavez1/Alan/Code/node-sever/views/404.html'
