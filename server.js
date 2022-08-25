@@ -3,10 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const corsOptions = require('./config/corsOptions');
 const bodyParser = require('body-parser');
 const { logger } = require('./middleware/logEvents');
 const errorHandler = require('./middleware/errorHandler');
+const verifyJWT = require('./middleware/verifyJWT');
+const credentials = require("./middleware/credentials");
 
 const signupRoutes = require('./routes/signupRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -16,12 +19,17 @@ const roleRoutes = require('./routes/roleRoutes');
 const userRolesRoutes = require('./routes/userRolesRoutes');
 const resumeRoutes = require('./routes/resumeRoutes');
 
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 // const API = process.env.API_URL || "http://localhost:8080";
 
 // custom middleware logger
 app.use(logger);
+
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
 
 // enable Cross Origin Resource Sharing (CORS)
 app.use(cors(corsOptions));
@@ -32,32 +40,35 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded to handle form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// middleware for cookies
+app.use(cookieParser());
+
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 /** Middleware that checks if JWT token exists and verifies it if it does exist.
  * In all future routes, this helps to know if the request is authenticated or not. */
-app.use( (req, res, next) => {
-    // check header or url parameters or post parameters for token
-    let token = req.headers['authorization'];
-    if (!token) return next(); //if no token, continue
-    next();
-
-    // token = token.replace('Bearer ', '');
-    // jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
-    //     if (err) {
-    //         return res.status(401).json({
-    //             error: true,
-    //             message: "(Unauthorized) Invalid user."
-    //         });
-    //     } else {
-    //         //set the user to req so other routes can use it
-    //         req.user = user;
-    //         next();
-    //     }
-    // });
-});
+// app.use( (req, res, next) => {
+//     // check header or url parameters or post parameters for token
+//     let token = req.headers['authorization'];
+//     if (!token) return next(); //if no token, continue
+//     next();
+//
+//     // token = token.replace('Bearer ', '');
+//     // jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
+//     //     if (err) {
+//     //         return res.status(401).json({
+//     //             error: true,
+//     //             message: "(Unauthorized) Invalid user."
+//     //         });
+//     //     } else {
+//     //         //set the user to req so other routes can use it
+//     //         req.user = user;
+//     //         next();
+//     //     }
+//     // });
+// });
 
 
 // /** request handlers */
@@ -108,6 +119,10 @@ app.use( (req, res, next) => {
 app.use('/', require('./routes/root'));
 app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
+app.use('/refresh', require('./routes/refresh'));
+app.use('/logout', require('./routes/logout'));
+
+app.use(verifyJWT);
 app.use('/employees', require('./routes/api/employees'));
 
 /** Handling routes request API handlers */
