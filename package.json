@@ -8,10 +8,6 @@
     "dev": "nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://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@github.com/alanchavezt/node-sever.git"
-  },
   "author": "Alan Chavez",
   "license": "ISC",
   "bugs": {
