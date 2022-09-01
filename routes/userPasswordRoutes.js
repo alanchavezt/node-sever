@@ -3,7 +3,7 @@ const routes = express.Router();
 const axios = require("axios");
 
 routes.post('/API/users/:id/password', async (req, res)=>{
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     try {
         const userId = req.params.id;
@@ -26,7 +26,7 @@ routes.post('/API/users/:id/password', async (req, res)=>{
 });
 
 routes.put('/API/users/:id/password', async (req, res)=>{
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     try {
         const userId = req.params.id;

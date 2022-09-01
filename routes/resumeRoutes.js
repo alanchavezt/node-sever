@@ -21,7 +21,7 @@ routes.get('/getResume', (req, res) => {
 });
 
 routes.post('/writeFile', async (req, res) => {
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
     const resume = req.body;
     const updatedResume = JSON.stringify(resume);
     const filePath = path.join(__dirname, '../data/myResumeFile.json')

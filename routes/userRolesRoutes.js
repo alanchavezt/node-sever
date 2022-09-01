@@ -4,7 +4,7 @@ const axios = require("axios");
 
 routes.get('/API/users/:id/roles', (req, res) => {
     const userId =  req.params.id;
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     axios.get(`${process.env.API_URL}/API/users/${userId}/roles`, {
         headers: {'authorization': authorization}
@@ -18,7 +18,7 @@ routes.get('/API/users/:id/roles', (req, res) => {
 });
 
 routes.post('/API/users/:id/roles', async (req, res, next)=>{
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
     const userId =  req.params.id;
     const role = req.body;
 

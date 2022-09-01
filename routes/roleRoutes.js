@@ -5,7 +5,7 @@ const axios = require("axios");
 
 
 routes.get('/', (req, res) => {
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     axios.get(`${process.env.API_URL}/API/roles`,{
         headers: {'authorization': authorization}
@@ -20,7 +20,7 @@ routes.get('/', (req, res) => {
 
 routes.get('/:id', (req, res) => {
     const roleId =  req.params.id;
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     axios.get(`${process.env.API_URL}/API/roles/${roleId}`, {
         headers: {'authorization': authorization}
@@ -34,7 +34,7 @@ routes.get('/:id', (req, res) => {
 });
 
 routes.post('/', async (req, res, next) => {
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     try {
         const role = req.body;
@@ -56,7 +56,7 @@ routes.post('/', async (req, res, next) => {
 });
 
 routes.put('/:id', async (req, res)=>{
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     try {
         const roleId = req.params.id;
@@ -80,7 +80,7 @@ routes.put('/:id', async (req, res)=>{
 
 routes.delete('/:id', (req, res)=>{
     const roleId = req.params.id;
-    const authorization = "Bearer " + req.headers.authorization;
+    const authorization = req.headers.authorization;
 
     axios.delete(`${process.env.API_URL}/API/roles/${roleId}`, {
         headers: {'authorization': authorization}

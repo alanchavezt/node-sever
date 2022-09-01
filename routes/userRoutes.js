@@ -9,8 +9,7 @@ let config = {
 };
 
 router.use( (req, res, next) => {
-    // TODO: The bearer is done in the axios interceptors. I have to remove it from here
-    config.headers.authorization = `Bearer ${req.headers.authorization}`;
+    config.headers.authorization = req.headers.authorization;
     next();
 });
 
