@@ -1,38 +1,38 @@
 const express = require('express');
 const routes = express.Router();
-const path = require("path");
 const fs = require("fs");
+const fsPromises = require("fs").promises;
+const path = require("path");
 
-routes.get('/getResume', (req, res) => {
-    const filePath = path.join(__dirname, '../data/myResumeFile.json')
+routes.get('/getResume', async (req, res) => {
+    const filePath = path.join(__dirname, '..', '..', 'data', 'myResumeFile.json');
 
-    fs.readFile(filePath, 'utf8' , (err, data) => {
-        if (err) {
-            console.error(err);
-            return res.status(403).json({
-                error: true,
-                message: "File not found!"
-            });
-        }
-
+    try {
+        const data = await fsPromises.readFile(filePath, 'utf8');
         const resume = JSON.parse(data);
         return res.json(resume);
-    })
+
+    } catch (err) {
+        console.error(err);
+        return res.status(403).json({
+            error: true,
+            message: "File not found!"
+        });
+    }
 });
 
 routes.post('/writeFile', async (req, res) => {
-    const authorization = req.headers.authorization;
     const resume = req.body;
     const updatedResume = JSON.stringify(resume);
-    const filePath = path.join(__dirname, '../data/myResumeFile.json')
+    const filePath = path.join(__dirname, '..', '..', 'data', 'myResumeFile.json');
 
-    // TODO figure out how to use the file system library with React
-    fs.writeFile(filePath, updatedResume, function(err) {
-        if (err) {
-            return console.log(err);
-        }
-        console.log("The file was saved!");
-    });
+    try {
+        await fsPromises.writeFile(filePath, updatedResume);
+        console.log("File was saved!");
+        return res.status(200).json({message: "File was saved!"});
+    } catch (err) {
+        console.error(err);
+    }
 });
 
 module.exports = routes;
