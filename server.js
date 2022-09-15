@@ -84,7 +84,7 @@ app.get('/', (req, res) => {
 });
 
 /** verify the token and return it if it's valid */
-app.get('/verifyToken', function (req, res) {
+app.get('/API/verifyToken', function (req, res) {
 
     // check header or url parameters or post parameters for token
     const token = req.body.token || req.query.token;
@@ -137,7 +137,7 @@ app.use(userPasswordRoutes);
 app.use(userRolesRoutes);
 app.use('/API/roles', roleRoutes);
 app.use('/API/users', userRoutes);
-app.use(resumeRoutes);
+app.use('/API', resumeRoutes);
 
 app.all('*', (req, res) => {
     res.status(404);
