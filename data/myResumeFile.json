@@ -1,1 +1,150 @@
-{"firstName":"Alan","middleName":null,"lastName":"Chavez","address":"135 S 500 W Salt Lake City, UT 84101","phone":"(385) 251-3722","email":"alanchavez1@gmail.com","summary":"Innovative and deadline-driven Software Engineer with 7+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.","objective":"Diligent software engineer with 7+ years experience in software development. Eager to build innovative and cutting edge business solutions for the impressive suite of clients within its global reach. In previous roles, slashed downtime by 25% and ensured 98% on-time project completion. Also identified and dealt with a significant process bottleneck that boosted coding efficiency by 35% when resolved.","education":[{"school":"Utah Valley University","degree":"Bachelor of Science in Software Engineering","startDate":"January 2015","endDate":"April 2019","state":"Utah","city":"Orem","description":"Heavy focus on full stack engineering with modules on both front end and back end processes.","educationId":"fb6fe35c-8b35-4d62-939b-aaa4ab776f81"},{"school":"Utah Valley University","degree":"English as a Second Language","startDate":"August 2014","endDate":"December 2014","state":"Utah","city":"Orem","description":"Passionate about learning new languages.","educationId":"f788f9a0-d73b-413c-8e18-d3449425bdf9"},{"school":"Universidad Catolica de Santa Maria","degree":"Bachelor of Science in System Engineering ","startDate":"March 2008","endDate":"December 2012","state":"Peru","city":"Arequipa","description":"Object Oriented Programming, Design and Development, Relational Databases.","educationId":"2b53b8c8-db89-451b-ba5a-12e2473fc9ea"}],"experience":[{"employer":"Elsevier Inc.","jobTitle":"Software Engineer","startDate":"September 2019","endDate":null,"state":"Utah","city":"Salt Lake City","jobDescription":["Supporting Web Services Using Jersey and Fauxjo Technologies for Acres Authoring App","Supporting Micro Services by using Spring Boot and Hibernate technologies for Poligy App","Build Acres A6 web application using Java technologies in the back end and React js framework in the front end.","React lead, migrating Acres A6 from backbone js framework to React js framework.","Designed front end architecture to run backbone js and react js simultaneously while migrating the modules from one framework to another.","Modeled, designed, maintained, and created React components to make the software modular, scalable and easy to maintain.","Create unit tests, integration tests, and end to end tests for React components using Jest library and Enzime library.","Built Find and Replace tool for Acres A6 and created a Web Service to process API’s requests. ","Modeled, designed, maintained, and created database schemas using Postgresql database.","Maintain, design, create API Web Service for Acres A6.","Use Maven to manage Java libraries and npm library to handle Javascript packages","Built a server to manage authentication and authorization using Node js."]},{"employer":"Kingsley Management Corporation","jobTitle":"Software Engineer","startDate":"August 2016","endDate":"August 2019","state":"Utah","city":"Provo","jobDescription":["Led Scrum meetings.","Followed Agile Software Development for planning, developing, delivering and improving our software development and project management. We use Jira Software.","Built Rest API using Spring MVC Java Framework.","Implemented real-time notifications with sockets in java in the back end and Vue js in the front end.","Built an Angular framework project for upgrading the company website.","Work with Laravel Framework for website projects: Authentication, routing, sessions, and caching.","Built and manage virtual-machine environments using Vagrant.","Used Composer for dependency management in PHP.","Upgraded Bootstrap framework to Vuetify framework for front-end development.","Programed in JavaScript using VueJs framework for building user interfaces.","Made calls to the REST API using AXIOS to send the asynchronous request to the server.","Modeled, designed, maintained, and created database schemas.","Deployed system application to live environment using AWS.","Implemented Webpack framework, install new packages using package manager npm.","Used git version-control system to manage repositories in Bitbucket and GitHub."]},{"employer":"UVU Rapid Development Center","jobTitle":"Web Developer","startDate":"January 2015","endDate":"July 2016","state":"Utah","city":"Orem","jobDescription":["Communicated with clients to gather requirements.","Wrote cross-browser compliant PHP, HTML, CSS, JavaScript, jQuery, AJAX.","Managed databases and provided technical support to end users.","Provided guidance to other team members on web development issues.","Developed and maintained front-end functionality of websites.","Designed and developed websites for corporate clients."]}],"skillsHighlight":"As a software engineer, I collaborated with fellow engineers on several applications for our clients. I've worked with a range a technologies in the web development world. From Back-end To Design. I used my knowledge of Java and React to create new features, customize functions, troubleshoot issues and debug platforms. I typically managed diverse tasks on seven to eight projects per sprint using a calendar and time tracker to ensure I remained on-schedule with my responsibilities.","skills":[{"skill":"Java","experience":"80%"},{"skill":"React","experience":"80%"},{"skill":"Postgresql","experience":"80%"},{"skill":"Maven","experience":"80%"},{"skill":"Gradle","experience":"80%"},{"skill":"AWS","experience":"80%"},{"skill":"NodeJs","experience":"80%"},{"skill":"Html","experience":"80%"},{"skill":"Css","experience":"80%"},{"skill":"Javascript","experience":"80%"}]}
+{
+  "firstName": "Alan",
+  "middleName": null,
+  "lastName": "Chavez",
+  "address": "",
+  "phone": "",
+  "email": "",
+  "summary": "Innovative and deadline-driven Software Engineer with 7+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.",
+  "objective": "Diligent software engineer with 7+ years experience in software development. Eager to build innovative and cutting edge business solutions for the impressive suite of clients within its global reach. In previous roles, slashed downtime by 25% and ensured 98% on-time project completion. Also identified and dealt with a significant process bottleneck that boosted coding efficiency by 35% when resolved.",
+  "education": [
+    {
+      "school": "Utah Valley University",
+      "degree": "Bachelor of Science in Software Engineering",
+      "startDate": "January 2015",
+      "endDate": "April 2019",
+      "state": "Utah",
+      "city": "Orem",
+      "description": "Heavy focus on full stack engineering with modules on both front end and back end processes.",
+      "educationId": "fb6fe35c-8b35-4d62-939b-aaa4ab776f81"
+    },
+    {
+      "school": "Utah Valley University",
+      "degree": "English as a Second Language",
+      "startDate": "August 2014",
+      "endDate": "December 2014",
+      "state": "Utah",
+      "city": "Orem",
+      "description": "Passionate about learning new languages.",
+      "educationId": "f788f9a0-d73b-413c-8e18-d3449425bdf9"
+    },
+    {
+      "school": "Universidad Catolica de Santa Maria",
+      "degree": "Bachelor of Science in System Engineering ",
+      "startDate": "March 2008",
+      "endDate": "December 2012",
+      "state": "Peru",
+      "city": "Arequipa",
+      "description": "Object Oriented Programming, Design and Development, Relational Databases.",
+      "educationId": "2b53b8c8-db89-451b-ba5a-12e2473fc9ea"
+    }
+  ],
+  "experience": [
+    {
+      "employer": "Elsevier Inc.",
+      "jobTitle": "Software Engineer",
+      "startDate": "September 2019",
+      "endDate": null,
+      "state": "Utah",
+      "city": "Salt Lake City",
+      "jobDescription": [
+        "Supporting Web Services Using Jersey and Fauxjo Technologies for Acres Authoring App",
+        "Supporting Micro Services by using Spring Boot and Hibernate technologies for Poligy App",
+        "Build Acres A6 web application using Java technologies in the back end and React js framework in the front end.",
+        "React lead, migrating Acres A6 from backbone js framework to React js framework.",
+        "Designed front end architecture to run backbone js and react js simultaneously while migrating the modules from one framework to another.",
+        "Modeled, designed, maintained, and created React components to make the software modular, scalable and easy to maintain.",
+        "Create unit tests, integration tests, and end to end tests for React components using Jest library and Enzime library.",
+        "Built Find and Replace tool for Acres A6 and created a Web Service to process API’s requests. ",
+        "Modeled, designed, maintained, and created database schemas using Postgresql database.",
+        "Maintain, design, create API Web Service for Acres A6.",
+        "Use Maven to manage Java libraries and npm library to handle Javascript packages",
+        "Built a server to manage authentication and authorization using Node js."
+      ]
+    },
+    {
+      "employer": "Kingsley Management Corporation",
+      "jobTitle": "Software Engineer",
+      "startDate": "August 2016",
+      "endDate": "August 2019",
+      "state": "Utah",
+      "city": "Provo",
+      "jobDescription": [
+        "Led Scrum meetings.",
+        "Followed Agile Software Development for planning, developing, delivering and improving our software development and project management. We use Jira Software.",
+        "Built Rest API using Spring MVC Java Framework.",
+        "Implemented real-time notifications with sockets in java in the back end and Vue js in the front end.",
+        "Built an Angular framework project for upgrading the company website.",
+        "Work with Laravel Framework for website projects: Authentication, routing, sessions, and caching.",
+        "Built and manage virtual-machine environments using Vagrant.",
+        "Used Composer for dependency management in PHP.",
+        "Upgraded Bootstrap framework to Vuetify framework for front-end development.",
+        "Programed in JavaScript using VueJs framework for building user interfaces.",
+        "Made calls to the REST API using AXIOS to send the asynchronous request to the server.",
+        "Modeled, designed, maintained, and created database schemas.",
+        "Deployed system application to live environment using AWS.",
+        "Implemented Webpack framework, install new packages using package manager npm.",
+        "Used git version-control system to manage repositories in Bitbucket and GitHub."
+      ]
+    },
+    {
+      "employer": "UVU Rapid Development Center",
+      "jobTitle": "Web Developer",
+      "startDate": "January 2015",
+      "endDate": "July 2016",
+      "state": "Utah",
+      "city": "Orem",
+      "jobDescription": [
+        "Communicated with clients to gather requirements.",
+        "Wrote cross-browser compliant PHP, HTML, CSS, JavaScript, jQuery, AJAX.",
+        "Managed databases and provided technical support to end users.",
+        "Provided guidance to other team members on web development issues.",
+        "Developed and maintained front-end functionality of websites.",
+        "Designed and developed websites for corporate clients."
+      ]
+    }
+  ],
+  "skillsHighlight": "As a software engineer, I collaborated with fellow engineers on several applications for our clients. I've worked with a range a technologies in the web development world. From Back-end To Design. I used my knowledge of Java and React to create new features, customize functions, troubleshoot issues and debug platforms. I typically managed diverse tasks on seven to eight projects per sprint using a calendar and time tracker to ensure I remained on-schedule with my responsibilities.",
+  "skills": [
+    {
+      "skill": "Java",
+      "experience": "80%"
+    },
+    {
+      "skill": "React",
+      "experience": "80%"
+    },
+    {
+      "skill": "Postgresql",
+      "experience": "80%"
+    },
+    {
+      "skill": "Maven",
+      "experience": "80%"
+    },
+    {
+      "skill": "Gradle",
+      "experience": "80%"
+    },
+    {
+      "skill": "AWS",
+      "experience": "80%"
+    },
+    {
+      "skill": "NodeJs",
+      "experience": "80%"
+    },
+    {
+      "skill": "Html",
+      "experience": "80%"
+    },
+    {
+      "skill": "Css",
+      "experience": "80%"
+    },
+    {
+      "skill": "Javascript",
+      "experience": "80%"
+    }
+  ]
+}
