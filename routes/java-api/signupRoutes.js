@@ -9,7 +9,7 @@ routes.post('/', async (req, res, next) => {
 
         res.status(201).json(response.data);
     } catch (error)  {
-        res.status(error.response.status).json(error);
+        res.status(error.response.status).json(error.response.data);
     }
 });
 
