@@ -37,4 +37,22 @@ routes.post('/API/users/:id/roles', async (req, res, next)=>{
     }
 });
 
+routes.delete('/API/users/:userId/roles/:roleId', async (req, res) => {
+    if (!req?.params?.userId || !req?.params?.roleId) return res.status(400).json({ 'message': 'User ID and Role Id are required.' });
+
+    const { userId, roleId} = req.params;
+    const url = `${process.env.API_URL}/API/users/${userId}/roles/${roleId}`;
+
+    try {
+        const response = await axios.delete(url, {
+            headers: {'authorization': req.headers.authorization}
+        });
+        const data = response?.data;
+
+        res.json(data);
+    } catch (err)  {
+        res.json(err);
+    }
+});
+
 module.exports = routes;
