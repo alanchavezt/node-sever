@@ -3,15 +3,12 @@ const routes = express.Router();
 const axios = require("axios");
 
 routes.post('/', async (req, res) => {
-    // const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email, password } = req.body;
 
-    // return 400 status if username/password does not exist
     if (!email || !password) {
         return res.status(400).json({
             error: true,
-            message: "Username or Password required."
+            message: "Username and password are required."
         });
     }
 
