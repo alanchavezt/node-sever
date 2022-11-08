@@ -26,7 +26,7 @@ const PORT = process.env.PORT || 4000;
 // const API = process.env.API_URL || "http://localhost:8080";
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
 // custom middleware logger
 app.use(logger);
@@ -120,15 +120,12 @@ app.get('/API/verifyToken', function (req, res) {
 });
 
 /** Handling routes request for testing purposes */
-// app.use('/', require('./routes/root'));
-// app.use('/register', require('./routes/register'));
-// app.use('/auth', require('./routes/auth'));
-// app.use('/refresh', require('./routes/refresh'));
-// app.use('/logout', require('./routes/logout'));
-//
-// app.use(verifyJWT);
-// app.use('/employees', require('./routes/api/employees'));
-// app.use('/users', require('./routes/api/users'));
+app.use('/', require('./routes/root'));
+app.use('/register', require('./routes/register'));
+app.use('/auth', require('./routes/auth'));
+app.use('/refresh', require('./routes/refresh'));
+app.use('/logout', require('./routes/logout'));
+
 
 /** Handling routes request API handlers */
 app.use('/API/signup', signupRoutes);
@@ -138,6 +135,10 @@ app.use(userRolesRoutes);
 app.use('/API/roles', roleRoutes);
 app.use('/API/users', userRoutes);
 app.use('/API', resumeRoutes);
+
+app.use(verifyJWT);
+app.use('/employees', require('./routes/api/employees'));
+app.use('/users', require('./routes/api/users'));
 
 app.all('*', (req, res) => {
     res.status(404);
@@ -153,9 +154,9 @@ app.all('*', (req, res) => {
 /** Error-handling middleware */
 app.use(errorHandler);
 
-// mongoose.connection.once('open', () => {
-//     console.log('Connected to MongoDB');
-//     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// });
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
