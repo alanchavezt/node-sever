@@ -84,7 +84,7 @@ app.get('/', (req, res) => {
 });
 
 /** verify the token and return it if it's valid */
-app.get('/API/verifyToken', function (req, res) {
+app.get('/api/verifyToken', function (req, res) {
 
     // check header or url parameters or post parameters for token
     const token = req.body.token || req.query.token;
@@ -128,13 +128,13 @@ app.use('/logout', require('./routes/logout'));
 
 
 /** Handling routes request API handlers */
-app.use('/API/signup', signupRoutes);
-app.use('/API/auth/signin', authRoutes);
+app.use('/api/signup', signupRoutes);
+app.use('/api/auth/signin', authRoutes);
 app.use(userPasswordRoutes);
 app.use(userRolesRoutes);
-app.use('/API/roles', roleRoutes);
-app.use('/API/users', userRoutes);
-app.use('/API', resumeRoutes);
+app.use('/api/roles', roleRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api', resumeRoutes);
 
 app.use(verifyJWT);
 app.use('/employees', require('./routes/api/employees'));

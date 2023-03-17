@@ -7,7 +7,7 @@ const axios = require("axios");
 routes.get('/', (req, res) => {
     const authorization = req.headers.authorization;
 
-    axios.get(`${process.env.API_URL}/API/roles`,{
+    axios.get(`${process.env.API_URL}/api/roles`,{
         headers: {'authorization': authorization}
     }).then(response => {
         res.status(200);
@@ -22,7 +22,7 @@ routes.get('/:id', (req, res) => {
     const roleId =  req.params.id;
     const authorization = req.headers.authorization;
 
-    axios.get(`${process.env.API_URL}/API/roles/${roleId}`, {
+    axios.get(`${process.env.API_URL}/api/roles/${roleId}`, {
         headers: {'authorization': authorization}
     }).then(response => {
         res.status(200);
@@ -41,7 +41,7 @@ routes.post('/', async (req, res, next) => {
         // const hashedPassword = await bcrypt.hash(req.body.password, 10);
         // user.password = hashedPassword;
 
-        const response = await axios.post(`${process.env.API_URL}/API/roles`, role, {
+        const response = await axios.post(`${process.env.API_URL}/api/roles`, role, {
             headers: {'authorization': authorization}
         });
 
@@ -64,7 +64,7 @@ routes.put('/:id', async (req, res)=>{
         // const hashedPassword = await bcrypt.hash(req.body.password, 10);
         // user.password = hashedPassword;
 
-        const response = await axios.put(`${process.env.API_URL}/API/roles/${roleId}`, role, {
+        const response = await axios.put(`${process.env.API_URL}/api/roles/${roleId}`, role, {
             headers: {'authorization': authorization}
         });
 
@@ -82,7 +82,7 @@ routes.delete('/:id', (req, res)=>{
     const roleId = req.params.id;
     const authorization = req.headers.authorization;
 
-    axios.delete(`${process.env.API_URL}/API/roles/${roleId}`, {
+    axios.delete(`${process.env.API_URL}/api/roles/${roleId}`, {
         headers: {'authorization': authorization}
     }).then(response => {
         res.status(200);

@@ -2,11 +2,11 @@ const express = require('express');
 const routes = express.Router();
 const axios = require("axios");
 
-routes.get('/API/users/:id/roles', (req, res) => {
+routes.get('/api/users/:id/roles', (req, res) => {
     const userId =  req.params.id;
     const authorization = req.headers.authorization;
 
-    axios.get(`${process.env.API_URL}/API/users/${userId}/roles`, {
+    axios.get(`${process.env.API_URL}/api/users/${userId}/roles`, {
         headers: {'authorization': authorization}
     }).then(response => {
         res.status(200);
@@ -17,13 +17,13 @@ routes.get('/API/users/:id/roles', (req, res) => {
     });
 });
 
-routes.post('/API/users/:id/roles', async (req, res, next)=>{
+routes.post('/api/users/:id/roles', async (req, res, next)=>{
     const authorization = req.headers.authorization;
     const userId =  req.params.id;
     const role = req.body;
 
     try {
-        const response = await axios.post(`${process.env.API_URL}/API/users/${userId}/roles`, role, {
+        const response = await axios.post(`${process.env.API_URL}/api/users/${userId}/roles`, role, {
             headers: {'authorization': authorization}
         });
 
@@ -37,11 +37,11 @@ routes.post('/API/users/:id/roles', async (req, res, next)=>{
     }
 });
 
-routes.delete('/API/users/:userId/roles/:roleId', async (req, res) => {
+routes.delete('/api/users/:userId/roles/:roleId', async (req, res) => {
     if (!req?.params?.userId || !req?.params?.roleId) return res.status(400).json({ 'message': 'User ID and Role Id are required.' });
 
     const { userId, roleId} = req.params;
-    const url = `${process.env.API_URL}/API/users/${userId}/roles/${roleId}`;
+    const url = `${process.env.API_URL}/api/users/${userId}/roles/${roleId}`;
 
     try {
         const response = await axios.delete(url, {

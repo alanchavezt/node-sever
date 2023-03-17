@@ -10,7 +10,7 @@ routes.post('/', async (req, res, next) => {
     }
 
     try {
-        const response = await axios.post(`${process.env.API_URL}/API/signup`, user);
+        const response = await axios.post(`${process.env.API_URL}/api/signup`, user);
 
         res.status(201).json(response.data);
     } catch (error)  {

@@ -13,7 +13,7 @@ routes.post('/', async (req, res) => {
     }
 
     try {
-        const response = await axios.post(`${process.env.API_URL}/API/auth`, {email, password});
+        const response = await axios.post(`${process.env.API_URL}/api/auth`, {email, password});
         const token = response.data.token;
         const user = response.data.user;
         const roles = response.data.roles;

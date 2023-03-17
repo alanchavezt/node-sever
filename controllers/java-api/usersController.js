@@ -5,7 +5,7 @@ let config = {headers: {'authorization': ""}};
 const getAllUsers = async (req, res) => {
     config.headers.authorization = req.headers.authorization;
 
-    const url = `${process.env.API_URL}/API/users`;
+    const url = `${process.env.API_URL}/api/users`;
     const response = await axios.get(url, config);
     const users = response?.data;
 
@@ -21,7 +21,7 @@ const createNewUser = async (req, res) => {
 
     config.headers.authorization = req.headers.authorization;
 
-    const url = `${process.env.API_URL}/API/users`;
+    const url = `${process.env.API_URL}/api/users`;
 
     try {
         const response = await axios.post(url, req.body, config);
@@ -43,7 +43,7 @@ const updateUser = async (req, res) => {
     config.headers.authorization = req.headers.authorization;
 
     const userId = req.params.id;
-    const url = `${process.env.API_URL}/API/users/${userId}`;
+    const url = `${process.env.API_URL}/api/users/${userId}`;
 
     try {
         const response = await axios.put(url, req.body, config);
@@ -62,7 +62,7 @@ const deleteUser = async (req, res) => {
     config.headers.authorization = req.headers.authorization;
 
     const userId = req.params.id;
-    const url = `${process.env.API_URL}/API/users/${userId}`;
+    const url = `${process.env.API_URL}/api/users/${userId}`;
 
     try {
         const response = await axios.delete(url, config);
@@ -80,7 +80,7 @@ const getUser = async (req, res) => {
     config.headers.authorization = req.headers.authorization;
 
     const userId =  req.params.id;
-    const url = `${process.env.API_URL}/API/users/${userId}`;
+    const url = `${process.env.API_URL}/api/users/${userId}`;
 
     try {
         const response = await axios.get(url, config);
