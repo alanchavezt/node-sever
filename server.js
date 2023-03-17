@@ -129,7 +129,7 @@ app.use('/logout', require('./routes/logout'));
 
 /** Handling routes request API handlers */
 app.use('/api/signup', signupRoutes);
-app.use('/api/auth/signin', authRoutes);
+app.use('/api/auth', authRoutes);
 app.use(userPasswordRoutes);
 app.use(userRolesRoutes);
 app.use('/api/roles', roleRoutes);

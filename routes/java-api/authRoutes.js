@@ -14,11 +14,11 @@ routes.post('/', async (req, res) => {
 
     try {
         const response = await axios.post(`${process.env.API_URL}/api/auth`, {email, password});
-        const token = response.data.token;
+        const accessToken = response.data.accessToken;
         const user = response.data.user;
         const roles = response.data.roles;
 
-        return res.json({token, user, roles});
+        return res.json({accessToken, user, roles});
     } catch (error) {
         res.status(401).json({
             error: error,
