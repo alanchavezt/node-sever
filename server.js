@@ -83,42 +83,6 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Node.js! - ' + req.user.name);
 });
 
-/** verify the token and return it if it's valid */
-app.get('/api/verifyToken', function (req, res) {
-
-    // check header or url parameters or post parameters for token
-    const token = req.body.token || req.query.token;
-
-    if (!token) {
-        return res.status(400).json({
-            error: true,
-            message: "Token is required."
-        });
-    }
-
-    return res.json({ user: {}, token });
-
-    // check token that was passed by decoding token using secret
-    // jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
-    //     if (err) return res.status(401).json({
-    //         error: true,
-    //         message: "Invalid token."
-    //     });
-    //
-    //     // todo: retrieve the token from the database and compare tokens
-    //     // return 401 status if the userId does not match.
-    //     if (user.userId !== userData.userId) {
-    //         return res.status(401).json({
-    //             error: true,
-    //             message: "Invalid user."
-    //         });
-    //     }
-    //
-    //     const userObj = utils.getCleanUser(userData);
-    //     return res.json({ user: userObj, token });
-    // });
-});
-
 /** Handling routes request for testing purposes */
 app.use('/', require('./routes/root'));
 app.use('/register', require('./routes/register'));
