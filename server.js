@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -21,13 +20,12 @@ const roleRoutes = require('./routes/java-api/roleRoutes');
 const userRolesRoutes = require('./routes/java-api/userRolesRoutes');
 const resumeRoutes = require('./routes/java-api/resumeRoutes');
 
-
 const app = express();
 const PORT = process.env.PORT || 4000;
 // const API = process.env.API_URL || "http://localhost:8080";
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
 // custom middleware logger
 app.use(logger);
@@ -119,9 +117,9 @@ app.all(/.*/, (req, res) => {
 /** Error-handling middleware */
 app.use(errorHandler);
 
-// mongoose.connection.once('open', () => {
-//     console.log('Connected to MongoDB');
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// });
+});
 
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
