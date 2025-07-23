@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
@@ -26,7 +27,7 @@ const PORT = process.env.PORT || 4000;
 // const API = process.env.API_URL || "http://localhost:8080";
 
 // Connect to MongoDB
-connectDB();
+// connectDB();
 
 // custom middleware logger
 app.use(logger);
@@ -104,7 +105,7 @@ app.use(verifyJWT);
 app.use('/employees', require('./routes/api/employees'));
 app.use('/users', require('./routes/api/users'));
 
-app.all('*', (req, res) => {
+app.all(/.*/, (req, res) => {
     res.status(404);
     if (req.accepts('html')) {
         res.sendFile(path.join(__dirname, 'views', '404.html'));
@@ -118,9 +119,9 @@ app.all('*', (req, res) => {
 /** Error-handling middleware */
 app.use(errorHandler);
 
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
+// mongoose.connection.once('open', () => {
+//     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-});
+// });
 
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
