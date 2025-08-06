@@ -2,9 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Please fill a valid email address']
+    },
     username: {
         type: String,
-        required: true
+        // required: true
     },
     roles: {
         User: {

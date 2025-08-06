@@ -1,5 +1,6 @@
 [
   {
+    "email": "kenzie@gmail.com",
     "username": "kenzie",
     "roles": {
       "User": 2001,
@@ -9,24 +10,8 @@
     "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhbHQxIiwiaWF0IjoxNjMzOTkyNTY0LCJleHAiOjE2MzQwNzg5NjR9.gE2CgbtEuqE42LeJ4dP6APmqyGTNBh53WXVyDdP47yM"
   },
   {
-    "username": "shanna",
-    "roles": {
-      "User": 2001
-    },
-    "password": "$2b$10$G2ynTGl1b8RuEzGZRMfQi.AuDuctw3LWLAk0t7ozZZlnQ//fkAbG.",
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNoYW5uYSIsImlhdCI6MTY2MTQ2NDczMywiZXhwIjoxNjYxNTUxMTMzfQ.oiti56WL2VYtvfSIkeDgTFHF8kBz82CEXKHg7N_TGFU"
-  },
-  {
-    "username": "drew",
-    "roles": {
-      "User": 2001,
-      "Editor": 1984
-    },
-    "password": "$2b$10$cvfmz./teMWDccIMChAxZ.HqgL3eoQGYTm1z9lGy5iRf8D7NNargC",
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRyZXciLCJpYXQiOjE2NjE0NjQ5MzksImV4cCI6MTY2MTU1MTMzOX0.DuaDyEto6LO1U6dG9YtchDwl9fzTd4RUMiWDPgvYPS0"
-  },
-  {
-    "username": "alan",
+    "email": "test@gmail.com",
+    "username": "test",
     "roles": {
       "User": 2001,
       "Editor": 1984,
