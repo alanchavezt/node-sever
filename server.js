@@ -46,39 +46,6 @@ app.use(cookieParser());
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-/** Middleware that checks if JWT token exists and verifies it if it does exist.
- * In all future routes, this helps to know if the request is authenticated or not. */
-app.use( (req, res, next) => {
-    // check header or url parameters or post parameters for token
-    let token = req.headers['authorization'];
-    if (!token) return next(); //if no token, continue
-    next();
-
-    // token = token.replace('Bearer ', '');
-    // jwt.verify(token, process.env.JWT_SECRET, function (err, user) {
-    //     if (err) {
-    //         return res.status(401).json({
-    //             error: true,
-    //             message: "(Unauthorized) Invalid user."
-    //         });
-    //     } else {
-    //         //set the user to req so other routes can use it
-    //         req.user = user;
-    //         next();
-    //     }
-    // });
-});
-
-
-// /** request handlers */
-app.get('/', (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({success: false, message: 'Invalid user to access it.'});
-    }
-    res.send('Welcome to the Node.js! - ' + req.user.name);
-});
-
 /** Handling routes request for testing purposes */
 app.use('/', require('./routes/root'));
 app.use('/register', require('./routes/register'));
