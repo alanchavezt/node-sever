@@ -12,8 +12,6 @@ const verifyJWT = require('./middleware/verifyJWT');
 const credentials = require("./middleware/credentials");
 const connectDB = require('./config/dbConn');
 
-const signupRoutes = require('./routes/java-api/signupRoutes');
-const authRoutes = require('./routes/java-api/authRoutes');
 const userPasswordRoutes = require('./routes/java-api/userPasswordRoutes');
 const userRoutes = require('./routes/java-api/userRoutes');
 const roleRoutes = require('./routes/java-api/roleRoutes');
@@ -91,8 +89,6 @@ app.use('/logout', require('./routes/logout'));
 
 
 /** Handling routes request API handlers */
-app.use('/api/signup', signupRoutes);
-app.use('/api/auth', authRoutes);
 app.use(userPasswordRoutes);
 app.use(userRolesRoutes);
 app.use('/api/roles', roleRoutes);
