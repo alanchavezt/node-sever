@@ -13,7 +13,6 @@ const credentials = require("./middleware/credentials");
 const connectDB = require('./config/dbConn');
 
 const userPasswordRoutes = require('./routes/java-api/userPasswordRoutes');
-const userRoutes = require('./routes/java-api/userRoutes');
 const roleRoutes = require('./routes/java-api/roleRoutes');
 const userRolesRoutes = require('./routes/java-api/userRolesRoutes');
 const resumeRoutes = require('./routes/java-api/resumeRoutes');
@@ -92,7 +91,6 @@ app.use('/logout', require('./routes/logout'));
 app.use(userPasswordRoutes);
 app.use(userRolesRoutes);
 app.use('/api/roles', roleRoutes);
-app.use('/api/users', userRoutes);
 app.use('/api', resumeRoutes);
 
 app.use(verifyJWT);

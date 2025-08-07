@@ -7,8 +7,13 @@ const verifyRoles = require('../../middleware/verifyRoles');
 router.route('/')
     .get(verifyRoles(ROLES_LIST.Admin), usersController.getAllUsers)
     .delete(verifyRoles(ROLES_LIST.Admin), usersController.deleteUser);
+    // TODO: Implement create user functionality
+    // .post(verifyRoles(ROLES_LIST.Admin), usersController.createNewUser);
 
 router.route('/:id')
-    .get(verifyRoles(ROLES_LIST.Admin), usersController.getUser);
+    .get(verifyRoles(ROLES_LIST.Admin), usersController.getUser)
+    // TODO: Implement update user functionality, probably move the deleteUser to from '/' to '/:id'
+    // .put(verifyRoles(ROLES_LIST.Admin), usersController.updateUser)
+    // .delete(verifyRoles(ROLES_LIST.Admin), usersController.deleteUser);
 
 module.exports = router;
