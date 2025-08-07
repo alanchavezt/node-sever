@@ -1,5 +1,6 @@
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
+const { v4: uuidV4 } = require('uuid');
 
 const handleNewUser = async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
@@ -16,6 +17,7 @@ const handleNewUser = async (req, res) => {
 
         //create and store the new user
         const result = await User.create({
+            "id": uuidV4(),
             "firstName": firstName,
             "lastName": lastName,
             "email": email,
