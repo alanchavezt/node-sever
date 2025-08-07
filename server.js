@@ -15,7 +15,7 @@ const connectDB = require('./config/dbConn');
 const userPasswordRoutes = require('./routes/java-api/userPasswordRoutes');
 const roleRoutes = require('./routes/java-api/roleRoutes');
 const userRolesRoutes = require('./routes/java-api/userRolesRoutes');
-const resumeRoutes = require('./routes/java-api/resumeRoutes');
+const resumeRoutes = require('./routes/api/resumeRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
