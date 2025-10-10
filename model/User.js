@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { v4: uuidV4 } = require('uuid');
+const { v4: uuidV4 } = require("uuid");
 
 const userSchema = new Schema({
     id: {
@@ -13,6 +13,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    middleName: {
+        type: String
+    },
     lastName: {
         type: String,
         required: true
@@ -21,10 +24,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Please fill a valid email address']
+        match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please fill a valid email address"]
     },
     username: {
-        type: String,
+        type: String
         // required: true
     },
     roles: {
@@ -38,9 +41,13 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false // Optional for now, we will refactor the password later, since we will use jwt tokens
     },
-    refreshToken: String
+    refreshToken: String,
+    active: {
+        type: Boolean,
+        default: true
+    }
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
