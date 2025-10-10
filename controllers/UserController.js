@@ -11,8 +11,7 @@ const createNewUser = async (req, res) => {
     try {
         const { username, firstName, middleName, lastName, email, roles } = req.body;
 
-        // if (!username || !firstName || !lastName || !email || !roles?.length) {
-        if (!username || !firstName || !lastName || !email ) {
+        if (!username || !firstName || !lastName || !email || !roles?.length) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
@@ -43,7 +42,7 @@ const createNewUser = async (req, res) => {
         const newUser = await User.create(userObject);
 
         res.status(201).json({
-            userId: newUser._id,
+            id: newUser.id,
             username: newUser.username
         });
     } catch (err) {
