@@ -7,27 +7,35 @@ const handleLogin = async (req, res) => {
 
     if (!email || !password) return res.status(400).json({ 'message': 'Username and password are required.' });
 
-    const foundUser = await User.findOne({ email: email }).exec();
+    const foundUser = await User.findOne({ email: email }).populate('roles').exec();
     if (!foundUser) return res.sendStatus(401); //Unauthorized
 
     // evaluate password
     const match = await bcrypt.compare(password, foundUser.password);
     if (match) {
         const user = {
+            "id": foundUser.id,
+            "username": foundUser.username,
             "firstName": foundUser.firstName,
             "lastName": foundUser.lastName,
             "email": foundUser.email,
         };
-        const roles = Object.values(foundUser.roles).filter(Boolean);
 
-        // create JWTs
+        // Extract the user's roles (as UUIDs or names)
+        const roles = foundUser.roles.map(role => ({
+            id: role.id,
+            name: role.name
+        }));
+
+        // Create access token
         const accessToken = jwt.sign(
             {
                 "UserInfo": {
+                    "id": foundUser.id,
+                    "username": foundUser.username,
                     "firstName": foundUser.firstName,
                     "lastName": foundUser.lastName,
                     "email": foundUser.email,
-                    "username": foundUser.username,
                     "roles": roles
                 }
             },
@@ -44,6 +52,7 @@ const handleLogin = async (req, res) => {
         // Saving refreshToken with current user
         foundUser.refreshToken = refreshToken;
         const result = await foundUser.save();
+
         console.log(result);
         console.log(user);
         console.log(roles);
