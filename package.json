@@ -2,7 +2,7 @@
   "name": "sever",
   "version": "1.0.0",
   "description": "Node Server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server",
     "dev": "nodemon server",
