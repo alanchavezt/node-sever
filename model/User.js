@@ -30,15 +30,13 @@ const userSchema = new Schema({
         type: String
         // required: true
     },
-    roles: {
-        User: {
-            type: Number,
-            default: 2001
-        },
-        Staff: Number,
-        Editor: Number,
-        Admin: Number
-    },
+    roles: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Role',
+            required: true
+        }
+    ],
     password: {
         type: String,
         required: false // Optional for now, we will refactor the password later, since we will use jwt tokens
@@ -48,6 +46,6 @@ const userSchema = new Schema({
         type: Boolean,
         default: true
     }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

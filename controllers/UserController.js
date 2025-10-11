@@ -10,7 +10,7 @@ const getAllUsers = async (req, res) => {
 
 const createNewUser = async (req, res) => {
     try {
-        const { username, firstName, middleName, lastName, email, roles } = req.body;
+        let { username, firstName, middleName, lastName, email, roles } = req.body;
 
         if (!username || !firstName || !lastName || !email || !roles?.length) {
             return res.status(400).json({ message: "Missing required fields" });
@@ -25,10 +25,16 @@ const createNewUser = async (req, res) => {
             return res.status(409).json({ message: "User already exists" });
         }
 
-        // Ensure all role IDs exist
+        // If no roles provided, default to USER role
+        if (!roles || !roles.length) {
+            const defaultRole = await Role.findOne({ name: 'USER' }).exec();
+            if (!defaultRole) return res.status(500).json({ message: 'Default USER role not found' });
+            roles = [{ id: defaultRole.id }];
+        }
+
+        // Ensure all roles exist
         const roleIds = roles.map(r => r.id);
         const roleDocs = await Role.find({ id: { $in: roleIds } }).exec();
-
         if (roleDocs.length !== roles.length) {
             return res.status(400).json({ message: "Some roles do not exist" });
         }
@@ -36,8 +42,7 @@ const createNewUser = async (req, res) => {
         const roleObjectIds = roleDocs.map(r => r._id);
 
         // 👇 Generate a random temporary password
-        // const tempPassword = Math.random().toString(36).slice(-8);
-        const tempPassword = "Alan123!";
+        const tempPassword = Math.random().toString(36).slice(-8);
         const hashedPwd = await bcrypt.hash(tempPassword, 10);
 
         const userObject = {
@@ -52,7 +57,6 @@ const createNewUser = async (req, res) => {
         };
 
         const newUser = await User.create(userObject);
-
         await newUser.populate("roles");
 
         res.status(201).json({
