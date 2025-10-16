@@ -25,8 +25,12 @@ const handleNewUser = async (req, res) => {
         // Assign the role using the _id reference
         const roles = [{ _id: defaultRole._id }];
 
+        // derive username from email (everything before '@')
+        const username = email.split('@')[0];
+
         const newUser = new User({
             id: uuidV4(),
+            username,
             firstName,
             lastName,
             email,
