@@ -64,6 +64,7 @@ app.use(verifyJWT);
 app.use('/employees', require('./routes/api/employees'));
 app.use('/roles', require('./routes/api/roleRoutes'));
 app.use('/users', require('./routes/api/userRoutes'));
+app.use('/users', require('./routes/api/userPasswordRoutes'));
 
 app.all(/.*/, (req, res) => {
     res.status(404);
