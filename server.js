@@ -1,19 +1,19 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-const corsOptions = require('./config/corsOptions');
-const bodyParser = require('body-parser');
-const { logger } = require('./middleware/logEvents');
-const errorHandler = require('./middleware/errorHandler');
-const verifyJWT = require('./middleware/verifyJWT');
+require("dotenv").config();
+const express = require("express");
+const path = require("path");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+const corsOptions = require("./config/corsOptions");
+const bodyParser = require("body-parser");
+const { logger } = require("./middleware/logEvents");
+const errorHandler = require("./middleware/errorHandler");
+const verifyJWT = require("./middleware/verifyJWT");
 const credentials = require("./middleware/credentials");
-const connectDB = require('./config/dbConn');
+const connectDB = require("./config/dbConn");
 
-const userRolesRoutes = require('./routes/java-api/userRolesRoutes');
-const resumeRoutes = require('./routes/api/resumeRoutes');
+const userRolesRoutes = require("./routes/java-api/userRolesRoutes");
+const resumeRoutes = require("./routes/api/resumeRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -42,42 +42,43 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 /** Handling routes request for testing purposes */
-app.use('/', require('./routes/root'));
-app.use('/register', require('./routes/register'));
-app.use('/auth', require('./routes/auth'));
-app.use('/refresh', require('./routes/refresh'));
-app.use('/logout', require('./routes/logout'));
+app.use("/", require("./routes/root"));
+app.use("/register", require("./routes/register"));
+app.use("/auth", require("./routes/auth"));
+app.use("/refresh", require("./routes/refresh"));
+app.use("/logout", require("./routes/logout"));
 
 
 /** Handling routes request API handlers */
 app.use(userRolesRoutes);
-app.use('/api', resumeRoutes);
+app.use("/api", resumeRoutes);
 
 app.use(verifyJWT);
-app.use('/employees', require('./routes/api/employees'));
-app.use('/roles', require('./routes/api/roleRoutes'));
-app.use('/users', require('./routes/api/userRoutes'));
-app.use('/users', require('./routes/api/userPasswordRoutes'));
+app.use("/employees", require("./routes/api/employees"));
+app.use("/roles", require("./routes/api/roleRoutes"));
+app.use("/users", require("./routes/api/userRoutes"));
+app.use("/users", require("./routes/api/userPasswordRoutes"));
+app.use("/users", require("./routes/api/userRoleRoutes"));
 
 app.all(/.*/, (req, res) => {
     res.status(404);
-    if (req.accepts('html')) {
-        res.sendFile(path.join(__dirname, 'views', '404.html'));
-    } else if (req.accepts('json')) {
+    if (req.accepts("html")) {
+        res.sendFile(path.join(__dirname, "views", "404.html"));
+    } else if (req.accepts("json")) {
         res.json({ "error": "404 Not Found" });
     } else {
-        res.type('txt').send("404 Not Found");
+        res.type("txt").send("404 Not Found");
     }
 });
 
 /** Error-handling middleware */
 app.use(errorHandler);
 
-mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
+mongoose.connection.once("open", () => {
+    console.log("Connected to MongoDB");
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
