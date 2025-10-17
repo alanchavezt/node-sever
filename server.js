@@ -12,7 +12,6 @@ const verifyJWT = require("./middleware/verifyJWT");
 const credentials = require("./middleware/credentials");
 const connectDB = require("./config/dbConn");
 
-const userRolesRoutes = require("./routes/java-api/userRolesRoutes");
 const resumeRoutes = require("./routes/api/resumeRoutes");
 
 const app = express();
@@ -44,16 +43,12 @@ app.use(cookieParser());
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, "public")));
 
-/** Handling routes request for testing purposes */
+// Routes handlers
 app.use("/", require("./routes/root"));
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
-
-
-/** Handling routes request API handlers */
-app.use(userRolesRoutes);
 app.use("/api", resumeRoutes);
 
 app.use(verifyJWT);
