@@ -1,5 +1,5 @@
 const express = require("express");
-const userPasswordController = require("../../controllers/userPasswordController.js");
+const userPasswordController = require("../../controllers/UserPasswordController.js");
 const verifyRoles = require("../../middleware/verifyRoles");
 const ROLES_LIST = require("../../config/roles_list");
 
