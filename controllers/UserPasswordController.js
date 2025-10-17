@@ -19,14 +19,10 @@ const updatePassword = async (req, res) => {
         return res.status(400).json({ message: "New password and confirm password do not match." });
     }
 
-    // Check if the user is updating their own password
+    // Self-update only
     const isSelfUpdate = requestingUser.id === id;
-
-    const isAdmin = requestingUser.roles.some(role => role.name === ROLES_LIST.Admin);
-
-    // If not self-update, check if user has Admin role
-    if (!isSelfUpdate && !isAdmin) {
-        return res.status(403).json({ message: "You do not have permission to update this password." });
+    if (!isSelfUpdate) {
+        return res.status(403).json({ message: "You can only change your own password." });
     }
 
     try {
@@ -50,4 +46,41 @@ const updatePassword = async (req, res) => {
     }
 };
 
-module.exports = { updatePassword };
+/**
+ * Admin-only: Reset another user's password.
+ * Expected body: { newPassword, confirmPassword }
+ */
+const resetPassword = async (req, res) => {
+    const { id } = req.params;
+    const { newPassword, confirmPassword } = req.body;
+    const requestingUser = req.user;
+
+    if (!newPassword || !confirmPassword) {
+        return res.status(400).json({ message: "New password and confirm password are required." });
+    }
+
+    if (newPassword !== confirmPassword) {
+        return res.status(400).json({ message: "New password and confirm password do not match." });
+    }
+
+    // Only admins can reset other users' passwords
+    const isAdmin = requestingUser.roles.some(role => role.name === ROLES_LIST.Admin);
+    if (!isAdmin) {
+        return res.status(403).json({ message: "Only admins can reset user passwords." });
+    }
+
+    try {
+        const user = await User.findOne({ id }).exec();
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const hashedPwd = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPwd;
+        await user.save();
+
+        return res.status(200).json({ message: `Password for ${user.email} has been reset successfully.` });
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+module.exports = { updatePassword, resetPassword };
