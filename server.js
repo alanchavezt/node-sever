@@ -12,11 +12,15 @@ const verifyJWT = require("./middleware/verifyJWT");
 const credentials = require("./middleware/credentials");
 const connectDB = require("./config/dbConn");
 
+const employeeRoutes = require("./routes/api/employees");
+const roleRoutes = require("./routes/api/roleRoutes");
+const userRoutes = require("./routes/api/userRoutes");
+const userPasswordRoutes = require("./routes/api/userPasswordRoutes");
+const userRoleRoutes = require("./routes/api/userRoleRoutes");
 const resumeRoutes = require("./routes/api/resumeRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-// const API = process.env.API_URL || "http://localhost:8080";
 
 // Connect to MongoDB
 connectDB();
@@ -52,11 +56,11 @@ app.use("/logout", require("./routes/logout"));
 app.use("/api", resumeRoutes);
 
 app.use(verifyJWT);
-app.use("/employees", require("./routes/api/employees"));
-app.use("/roles", require("./routes/api/roleRoutes"));
-app.use("/users", require("./routes/api/userRoutes"));
-app.use("/users", require("./routes/api/userPasswordRoutes"));
-app.use("/users", require("./routes/api/userRoleRoutes"));
+app.use("/employees", employeeRoutes);
+app.use("/roles", roleRoutes);
+app.use("/users", userRoutes);
+app.use("/users", userPasswordRoutes);
+app.use("/users", userRoleRoutes);
 
 app.all(/.*/, (req, res) => {
     res.status(404);
