@@ -1,5 +1,5 @@
-const User = require("../model/User");
-const Role = require("../model/Role");
+const User = require("../models/User");
+const Role = require("../models/Role");
 
 const getUserRoles = async (req, res) => {
     const { id } = req.params;
