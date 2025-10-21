@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Role = require('../models/Role');
+const Resume = require("../models/Resume");
 const bcrypt = require('bcrypt');
 const { v4: uuidV4 } = require('uuid');
 
@@ -28,6 +29,7 @@ const handleNewUser = async (req, res) => {
         // derive username from email (everything before '@')
         const username = email.split('@')[0];
 
+        // Create and save the user
         const newUser = new User({
             id: uuidV4(),
             username,
@@ -36,15 +38,35 @@ const handleNewUser = async (req, res) => {
             email,
             password: hashedPwd,
             roles,
+            active: true
         });
 
-        const result = await newUser.save();
+        const savedUser = await newUser.save();
 
-        console.log(`✅ User created: ${result.email} (${result.id})`);
+        // ✅ Automatically create an empty resume for the user
+        const newResume = await Resume.create({
+            user: savedUser._id,
+            firstName: savedUser.firstName,
+            middleName: savedUser.middleName || "",
+            lastName: savedUser.lastName,
+            email: savedUser.email,
+            summary: "",
+            objective: "",
+            education: [],
+            experience: [],
+            skills: [],
+            certifications: [],
+            languages: [],
+            skillsHighlight: ""
+        });
+
+        console.log(`✅ User created: ${savedUser.email} (${savedUser.id})`);
+        console.log(`📝 Resume created for user: ${savedUser.email} (resume id: ${newResume._id})`);
 
         res.status(201).json({
             success: `New user ${email} created!`,
-            userId: result.id, // return UUID
+            userId: savedUser.id,
+            resumeId: newResume._id
         });
     } catch (err) {
         console.error('Error creating new user:', err);

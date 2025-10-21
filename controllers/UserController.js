@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Role = require("../models/Role");
+const Resume = require("../models/Resume");
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
@@ -59,10 +60,30 @@ const createNewUser = async (req, res) => {
         const newUser = await User.create(userObject);
         await newUser.populate("roles");
 
+        // Create a minimal resume automatically
+        const resume = await Resume.create({
+            user: newUser._id,
+            firstName: newUser.firstName,
+            middleName: newUser.middleName,
+            lastName: newUser.lastName,
+            email: newUser.email,
+            summary: "",
+            objective: "",
+            education: [],
+            experience: [],
+            skills: [],
+            certifications: [],
+            languages: [],
+            skillsHighlight: ""
+        });
+
+        console.log(`📝 Created resume for user ${newUser.username} (resume id: ${resume._id})`);
+
         res.status(201).json({
             id: newUser.id,
             username: newUser.username,
-            roles: newUser.roles.map(r => ({ id: r.id, name: r.name }))
+            roles: newUser.roles.map(r => ({ id: r.id, name: r.name })),
+            resumeId: resume._id
         });
     } catch (err) {
         console.error(err);
