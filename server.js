@@ -18,6 +18,7 @@ const userRoutes = require("./routes/api/userRoutes");
 const userPasswordRoutes = require("./routes/api/userPasswordRoutes");
 const userRoleRoutes = require("./routes/api/userRoleRoutes");
 const resumeRoutes = require("./routes/api/resumeRoutes");
+const userResumeRoutes = require("./routes/api/userResumeRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -61,6 +62,7 @@ app.use("/roles", roleRoutes);
 app.use("/users", userRoutes);
 app.use("/users", userPasswordRoutes);
 app.use("/users", userRoleRoutes);
+app.use("/resumes", userResumeRoutes);
 
 app.all(/.*/, (req, res) => {
     res.status(404);
