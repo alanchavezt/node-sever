@@ -1,4 +1,5 @@
 const Resume = require("../models/Resume");
+require("../models/Education");
 
 const createResume = async (req, res) => {
     try {
@@ -12,13 +13,7 @@ const createResume = async (req, res) => {
 
 const getAllResumes = async (req, res) => {
     try {
-        const resumes = await Resume.find()
-            .populate("user", "firstName lastName email")
-            // .populate("education")
-            // .populate("experience")
-            // .populate("skills")
-            // .populate("certifications")
-            // .populate("languages");
+        const resumes = await Resume.find().populate("user", "firstName lastName email");
         res.json(resumes);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -27,39 +22,57 @@ const getAllResumes = async (req, res) => {
 
 const getResumeById = async (req, res) => {
     try {
-        const resume = await Resume.findById(req.params.id)
-            .populate("user", "firstName lastName email")
-            // .populate("education")
-            // .populate("experience")
-            // .populate("skills")
-            // .populate("certifications")
-            // .populate("languages");
+        const { id } = req.params;
+        const { populate } = req.query;
 
+        let query = Resume.findById(id);
+        if (populate) {
+            query = query.populate(populate); // e.g., "education"
+        }
+
+        const resume = await query.exec();
         if (!resume) return res.status(404).json({ message: "Resume not found" });
+
         res.json(resume);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error(err);
+        res.status(500).json({ message: "Failed to fetch resume" });
     }
 };
 
 const updateResume = async (req, res) => {
     try {
-        const updatedResume = await Resume.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        )
-            .populate("user")
-            // .populate("education")
-            .populate("experience")
-            .populate("skills")
-            .populate("certifications")
-            .populate("languages");
+        const { id } = req.params;
+        const updateData = req.body;
 
-        if (!updatedResume) return res.status(404).json({ message: "Resume not found" });
+        const resume = await Resume.findById(id);
+        if (!resume) {
+            return res.status(404).json({ message: "Resume not found" });
+        }
+
+        // Basic fields that can be updated
+        const fields = [
+            "firstName",
+            "middleName",
+            "lastName",
+            "address",
+            "phone",
+            "email",
+            "summary",
+            "objective"
+        ];
+
+        fields.forEach(field => {
+            if (updateData[field] !== undefined) {
+                resume[field] = updateData[field];
+            }
+        });
+
+        const updatedResume = await resume.save();
         res.json(updatedResume);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        console.error("Error updating resume:", error);
+        res.status(500).json({ message: "Server error updating resume" });
     }
 };
 
@@ -78,5 +91,5 @@ module.exports = {
     getAllResumes,
     getResumeById,
     updateResume,
-    deleteResume,
+    deleteResume
 };
