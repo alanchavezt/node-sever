@@ -3,6 +3,7 @@ const router = express.Router();
 const resumeController = require("../../controllers/ResumeController");
 const resumeEducationController = require("../../controllers/ResumeEducationController");
 const resumeExperienceController = require("../../controllers/ResumeExperienceController");
+const resumeSkillController = require("../../controllers/ResumeSkillController");
 const verifyRoles = require("../../middleware/verifyRoles");
 const ROLES_LIST = require("../../config/roles_list");
 
@@ -20,5 +21,8 @@ router.route("/:id/education")
 
 router.route("/:id/experience")
     .put(verifyRoles(ROLES_LIST.Admin), resumeExperienceController.updateExperience);
+
+router.route("/:id/skills")
+    .put(verifyRoles(ROLES_LIST.Admin), resumeSkillController.updateSkills);
 
 module.exports = router;
