@@ -30,6 +30,4 @@ const updateEducation = async (req, res) => {
     }
 };
 
-module.exports = {
-    updateEducation
-};
+module.exports = { updateEducation };
