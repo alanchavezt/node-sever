@@ -4,6 +4,8 @@ const resumeController = require("../../controllers/ResumeController");
 const resumeEducationController = require("../../controllers/ResumeEducationController");
 const resumeExperienceController = require("../../controllers/ResumeExperienceController");
 const resumeSkillController = require("../../controllers/ResumeSkillController");
+const resumeCertificationController = require("../../controllers/ResumeCertificationController");
+const resumeLanguageController = require("../../controllers/ResumeLanguageController");
 const verifyRoles = require("../../middleware/verifyRoles");
 const ROLES_LIST = require("../../config/roles_list");
 
@@ -24,5 +26,11 @@ router.route("/:id/experience")
 
 router.route("/:id/skills")
     .put(verifyRoles(ROLES_LIST.Admin), resumeSkillController.updateSkills);
+
+router.route("/:id/certifications")
+    .put(verifyRoles(ROLES_LIST.Admin), resumeCertificationController.updateCertifications);
+
+router.route("/:id/languages")
+    .put(verifyRoles(ROLES_LIST.Admin), resumeLanguageController.updateLanguages);
 
 module.exports = router;
