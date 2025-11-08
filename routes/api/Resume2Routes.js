@@ -14,7 +14,7 @@ router.route("/")
     .post(verifyRoles(ROLES_LIST.Admin), resumeController.createResume);
 
 router.route("/:id")
-    .get(verifyRoles(ROLES_LIST.Admin), resumeController.getResumeById)
+    .get(verifyRoles(ROLES_LIST.Admin, ROLES_LIST.User), resumeController.getResumeById)
     .put(verifyRoles(ROLES_LIST.Admin), resumeController.updateResume)
     .delete(verifyRoles(ROLES_LIST.Admin), resumeController.deleteResume);
 
