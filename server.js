@@ -19,7 +19,7 @@ const userPasswordRoutes = require("./routes/api/userPasswordRoutes");
 const userRoleRoutes = require("./routes/api/userRoleRoutes");
 const resumeRoutes = require("./routes/api/resumeRoutes");
 const Resume2Routes = require("./routes/api/Resume2Routes");
-const UserResumeRoutes = require("./routes/api/userResumeRoutes");
+const UserResumeRoutes = require("./routes/api/UserResumeRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
