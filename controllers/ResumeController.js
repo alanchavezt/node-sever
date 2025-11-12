@@ -45,7 +45,12 @@ const getResumeById = async (req, res) => {
 
         res.json(resume);
     } catch (err) {
-        console.error(err);
+        console.error("Error in getResumeById:", err);
+
+        if (err.status && err.message) {
+            return res.status(err.status).json({ message: err.message });
+        }
+
         res.status(500).json({ message: "Failed to fetch resume" });
     }
 };
