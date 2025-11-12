@@ -28,6 +28,13 @@ const getResumeById = async (req, res) => {
         let query = Resume.findById(id);
         if (populate) {
             query = query.populate(populate); // e.g., "education"
+        } else {
+            query = query
+                .populate("education")
+                .populate("experience")
+                .populate("skills")
+                .populate("certifications")
+                .populate("languages");
         }
 
         const resume = await query.exec();
