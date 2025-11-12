@@ -1,7 +1,5 @@
 const Resume = require("../models/Resume");
-const User = require("../models/User");
 require("../models/Education");
-const { checkSelfOrAdmin } = require("../middleware/checkSelfOrAdmin");
 
 const createResume = async (req, res) => {
     try {
@@ -26,7 +24,6 @@ const getResumeById = async (req, res) => {
     try {
         const { id } = req.params;
         const { populate } = req.query;
-        const requestingUser = req.user; // from auth middleware (contains uuid in id)
 
         let query = Resume.findById(id);
         if (populate) {
@@ -35,13 +32,6 @@ const getResumeById = async (req, res) => {
 
         const resume = await query.exec();
         if (!resume) return res.status(404).json({ message: "Resume not found" });
-
-        // Fetch the owner user document to get UUID
-        const owner = await User.findById(resume.user); // resume.user is ObjectId
-        if (!owner) return res.status(404).json({ message: "Owner user not found" });
-
-        // Check self or admin
-        checkSelfOrAdmin(requestingUser, owner.id); // owner.id is the UUID
 
         res.json(resume);
     } catch (err) {
