@@ -24,10 +24,14 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        lowercase: true,
+        trim: true,
         match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Please fill a valid email address"]
     },
     username: {
-        type: String
+        type: String,
+        lowercase: true,
+        trim: true,
         // required: true
     },
     roles: [
@@ -45,6 +49,44 @@ const userSchema = new Schema({
     active: {
         type: Boolean,
         default: true
+    },
+
+    // NEW FIELDS
+    status: {
+        type: String,
+        enum: ["ACTIVE", "INACTIVE", "PENDING", "SUSPENDED", "DELETED"],
+        default: "ACTIVE"
+    },
+
+    deletedAt: {
+        type: Date,
+        default: null
+    },
+
+    lastLoginAt: {
+        type: Date
+    },
+
+    loginCount: {
+        type: Number,
+        default: 0
+    },
+
+    isEmailVerified: {
+        type: Boolean,
+        default: false
+    },
+
+    emailVerificationToken: {
+        type: String
+    },
+
+    passwordResetToken: {
+        type: String
+    },
+
+    passwordResetExpiresAt: {
+        type: Date
     }
 }, { timestamps: true });
 
