@@ -7,7 +7,10 @@ const handleLogin = async (req, res) => {
 
     if (!email || !password) return res.status(400).json({ 'message': 'Username and password are required.' });
 
-    const foundUser = await User.findOne({ email: email }).populate('roles').exec();
+    const foundUser = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } })
+        .populate('roles')
+        .exec();
+
     if (!foundUser) return res.sendStatus(401); //Unauthorized
 
     // evaluate password

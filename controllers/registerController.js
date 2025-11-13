@@ -5,11 +5,14 @@ const bcrypt = require('bcrypt');
 const { v4: uuidV4 } = require('uuid');
 
 const handleNewUser = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    let { firstName, lastName, email, password } = req.body;
 
     if (!firstName || !lastName|| !email || !password) return res.status(400).json({ 'message': 'Username and password are required.' });
 
     try {
+        // Normalize email (make it lowercase)
+        email = email.trim().toLowerCase();
+
         // check for duplicate usernames in the db
         const duplicate = await User.findOne({ email: email }).exec();
         if (duplicate) return res.sendStatus(409); //Conflict
@@ -43,7 +46,7 @@ const handleNewUser = async (req, res) => {
 
         const savedUser = await newUser.save();
 
-        // ✅ Automatically create an empty resume for the user
+        // Automatically create an empty resume for the user
         const newResume = await Resume.create({
             user: savedUser._id,
             firstName: savedUser.firstName,
