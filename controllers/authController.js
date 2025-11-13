@@ -81,12 +81,15 @@ const handleLogin = async (req, res) => {
     // Send authorization roles and access token to user
     res.json({ user, roles, accessToken });
 
-    // TODO: FOLLOW UP
-    // Want to also track "failed attempts" or "lock accounts"?
-    // failedLoginAttempts
-    // lockedAt
-    // unlockAfter
-    // Auto-lockout after X failed attempts
+    // TODO: AUTH SECURITY ENHANCEMENTS
+    // Add account security tracking:
+    //  • failedLoginAttempts (number)
+    //  • lockedAt (Date)
+    //  • unlockAfter (Date or duration)
+    //  • Auto-lockout after X failed attempts
+    //  • Reset failedLoginAttempts on successful login
+    //  • Log audit events for monitoring suspicious activity
+    // ─────────────────────────────────────────────────────────────
 };
 
 module.exports = { handleLogin };
