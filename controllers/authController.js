@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const { createVerificationToken } = require('../helpers/tokens');
 const { sendVerificationEmail } = require('../helpers/email');
 
+const VERIFICATION_TOKEN_EXPIRES_MIN = process.env.VERIFICATION_TOKEN_EXPIRES_MIN ? Number(process.env.VERIFICATION_TOKEN_EXPIRES_MIN) : 60 * 24; // fallback to 24h
+
 const handleLogin = async (req, res) => {
     const { email, password } = req.body;
 
