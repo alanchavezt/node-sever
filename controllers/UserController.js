@@ -4,7 +4,7 @@ const Resume = require("../models/Resume");
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().select('-password -refreshToken'); // Exclude sensitive fields
     if (!users) return res.status(204).json({ "message": "No users found" });
     res.json(users);
 };

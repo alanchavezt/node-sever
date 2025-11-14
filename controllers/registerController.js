@@ -3,6 +3,10 @@ const Role = require('../models/Role');
 const Resume = require("../models/Resume");
 const bcrypt = require('bcrypt');
 const { v4: uuidV4 } = require('uuid');
+const { createVerificationToken } = require('../helpers/tokens');
+const { sendVerificationEmail } = require('../helpers/email');
+
+const VERIFICATION_TOKEN_EXPIRES_MIN = process.env.VERIFICATION_TOKEN_EXPIRES_MIN ? Number(process.env.VERIFICATION_TOKEN_EXPIRES_MIN) : 60 * 24; // 24h
 
 const handleNewUser = async (req, res) => {
     let { firstName, lastName, email, password } = req.body;
@@ -45,6 +49,19 @@ const handleNewUser = async (req, res) => {
         });
 
         const savedUser = await newUser.save();
+
+        const { token, hashed } = createVerificationToken();
+        savedUser.emailVerificationToken = hashed;
+        savedUser.emailVerificationExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_MIN * 60 * 1000);
+        await savedUser.save();
+
+        // send email (async)
+        try {
+            await sendVerificationEmail({ to: savedUser.email, token, userId: savedUser.id, name: savedUser.firstName });
+        } catch (err) {
+            console.error("Failed to send verification email", err);
+            // optionally return a warning but keep user created
+        }
 
         // Automatically create an empty resume for the user
         const newResume = await Resume.create({

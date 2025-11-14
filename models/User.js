@@ -72,14 +72,9 @@ const userSchema = new Schema({
         default: 0
     },
 
-    isEmailVerified: {
-        type: Boolean,
-        default: false
-    },
-
-    emailVerificationToken: {
-        type: String
-    },
+    isEmailVerified: { type: Boolean, default: false },
+    emailVerificationToken: { type: String },       // store hashed token
+    emailVerificationExpiresAt: { type: Date },
 
     passwordResetToken: {
         type: String
