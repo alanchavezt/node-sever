@@ -8,6 +8,7 @@ const ExperienceSchema = new mongoose.Schema({
     jobTitle: { type: String },
     startDate: { type: String },
     endDate: { type: String },
+    current: { type: Boolean, default: false },
     state: { type: String },
     city: { type: String },
     jobDescription: [{ type: String }]
