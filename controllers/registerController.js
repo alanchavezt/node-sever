@@ -1,17 +1,16 @@
-const User = require('../models/User');
-const Role = require('../models/Role');
-const Resume = require("../models/Resume");
-const bcrypt = require('bcrypt');
-const { v4: uuidV4 } = require('uuid');
-const { createVerificationToken } = require('../helpers/tokens');
-const { sendVerificationEmail } = require('../helpers/email');
+const User = require("../models/User");
+const Role = require("../models/Role");
+const bcrypt = require("bcrypt");
+const { v4: uuidV4 } = require("uuid");
+const { createVerificationToken } = require("../helpers/tokens");
+const { sendVerificationEmail } = require("../helpers/email");
 
 const VERIFICATION_TOKEN_EXPIRES_MIN = process.env.VERIFICATION_TOKEN_EXPIRES_MIN ? Number(process.env.VERIFICATION_TOKEN_EXPIRES_MIN) : 60 * 24; // 24h
 
 const handleNewUser = async (req, res) => {
     let { firstName, lastName, email, password } = req.body;
 
-    if (!firstName || !lastName|| !email || !password) return res.status(400).json({ 'message': 'Username and password are required.' });
+    if (!firstName || !lastName || !email || !password) return res.status(400).json({ "message": "Username and password are required." });
 
     try {
         // Normalize email (make it lowercase)
@@ -25,16 +24,16 @@ const handleNewUser = async (req, res) => {
         const hashedPwd = await bcrypt.hash(password, 10);
 
         // find default USER role
-        const defaultRole = await Role.findOne({ name: 'USER' }).exec();
+        const defaultRole = await Role.findOne({ name: "USER" }).exec();
         if (!defaultRole) {
-            return res.status(500).json({ message: 'Default USER role not found' });
+            return res.status(500).json({ message: "Default USER role not found" });
         }
 
         // Assign the role using the _id reference
         const roles = [{ _id: defaultRole._id }];
 
         // derive username from email (everything before '@')
-        const username = email.split('@')[0];
+        const username = email.split("@")[0];
 
         // Create and save the user
         const newUser = new User({
@@ -55,43 +54,28 @@ const handleNewUser = async (req, res) => {
         savedUser.emailVerificationExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_MIN * 60 * 1000);
         await savedUser.save();
 
-        // send email (async)
+        // Send verification email (async)
         try {
-            await sendVerificationEmail({ to: savedUser.email, token, userId: savedUser.id, name: savedUser.firstName });
+            await sendVerificationEmail({
+                to: savedUser.email,
+                token,
+                userId: savedUser.id,
+                name: savedUser.firstName
+            });
         } catch (err) {
             console.error("Failed to send verification email", err);
-            // optionally return a warning but keep user created
         }
 
-        // Automatically create an empty resume for the user
-        const newResume = await Resume.create({
-            user: savedUser._id,
-            firstName: savedUser.firstName,
-            middleName: savedUser.middleName || "",
-            lastName: savedUser.lastName,
-            email: savedUser.email,
-            summary: "",
-            objective: "",
-            education: [],
-            experience: [],
-            skills: [],
-            certifications: [],
-            languages: [],
-            skillsHighlight: ""
-        });
-
         console.log(`✅ User created: ${savedUser.email} (${savedUser.id})`);
-        console.log(`📝 Resume created for user: ${savedUser.email} (resume id: ${newResume._id})`);
 
         res.status(201).json({
             success: `New user ${email} created!`,
-            userId: savedUser.id,
-            resumeId: newResume._id
+            userId: savedUser.id
         });
     } catch (err) {
-        console.error('Error creating new user:', err);
+        console.error("Error creating new user:", err);
         res.status(500).json({ message: err.message });
     }
-}
+};
 
 module.exports = { handleNewUser };
