@@ -13,7 +13,13 @@ const ROLES_LIST = require("../../config/roles_list");
 
 router.route("/")
     .get(verifyRoles(ROLES_LIST.Admin), resumeController.getAllResumes)
-    .post(verifyRoles(ROLES_LIST.Admin), resumeController.createResume);
+    .post(
+        verifyRoles(ROLES_LIST.Admin, ROLES_LIST.User),
+        // TODO: figure out how to handle adding resumes with admin role, since the route doesn't have a user id,
+        //  it is undefined, and the verifySelfOrAdmin(getOwnerIdFromResume) fails
+        // verifySelfOrAdmin(getOwnerIdFromResume),
+        resumeController.createResume
+    );
 
 router.route("/:id")
     .get(

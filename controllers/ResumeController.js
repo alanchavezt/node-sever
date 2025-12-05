@@ -1,13 +1,41 @@
+const User = require("../models/User");
 const Resume = require("../models/Resume");
+const Education = require("../models/Education");
+const Experience = require("../models/Experience");
+const Skill = require("../models/Skill");
+const Certification = require("../models/Certification");
+const Language = require("../models/Language");
 require("../models/Education");
 
 const createResume = async (req, res) => {
     try {
-        const resume = new Resume(req.body);
+        const userUuid = req.body.userId;
+        const user = await User.findOne({ id: userUuid });
+        if (!user) {
+            return res.status(404).json({ message: `User with ID ${userUuid} not found` });
+        }
+
+        const resume = new Resume({
+            user: user._id,
+            firstName: user.firstName,
+            middleName: user.middleName || "",
+            lastName: user.lastName,
+            email: user.email,
+            summary: "",
+            objective: "",
+            skillsHighlight: "",
+            education: [],
+            experience: [],
+            skills: [],
+            certifications: [],
+            languages: []
+        });
+
         await resume.save();
         res.status(201).json(resume);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        console.error("Error creating resume:", err);
+        res.status(500).json({ message: "Server error while creating resume" });
     }
 };
 
@@ -90,10 +118,25 @@ const updateResume = async (req, res) => {
 
 const deleteResume = async (req, res) => {
     try {
-        const deleted = await Resume.findByIdAndDelete(req.params.id);
-        if (!deleted) return res.status(404).json({ message: "Resume not found" });
-        res.json({ message: "Resume deleted successfully" });
+        const { id } = req.params;
+
+        const resume = await Resume.findById(id);
+        if (!resume) {
+            return res.status(404).json({ message: "Resume not found" });
+        }
+
+        await Promise.all([
+            Education.deleteMany({ _id: { $in: resume.education } }),
+            Experience.deleteMany({ _id: { $in: resume.experience } }),
+            Skill.deleteMany({ _id: { $in: resume.skills } }),
+            Certification.deleteMany({ _id: { $in: resume.certifications } }),
+            Language.deleteMany({ _id: { $in: resume.languages } }),
+        ]);
+
+        await resume.deleteOne();
+        res.json({ message: "Resume and all related data deleted successfully" });
     } catch (err) {
+        console.error("Error deleting resume:", err);
         res.status(500).json({ message: err.message });
     }
 };
