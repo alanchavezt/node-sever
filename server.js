@@ -17,8 +17,8 @@ const roleRoutes = require("./routes/api/roleRoutes");
 const userRoutes = require("./routes/api/userRoutes");
 const userPasswordRoutes = require("./routes/api/userPasswordRoutes");
 const userRoleRoutes = require("./routes/api/userRoleRoutes");
-const resumeRoutes = require("./routes/api/resumeRoutes");
-const Resume2Routes = require("./routes/api/Resume2Routes");
+const PublicResumeRoutes = require("./routes/api/PublicResumeRoutes");
+const ResumeRoutes = require("./routes/api/ResumeRoutes");
 const UserResumeRoutes = require("./routes/api/UserResumeRoutes");
 
 const app = express();
@@ -55,7 +55,7 @@ app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
-app.use("/api", resumeRoutes);
+app.use("/api", PublicResumeRoutes);
 
 app.use(verifyJWT);
 app.use("/employees", employeeRoutes);
@@ -64,7 +64,7 @@ app.use("/users", userRoutes);
 app.use("/users", userPasswordRoutes);
 app.use("/users", userRoleRoutes);
 app.use("/users", UserResumeRoutes);
-app.use("/resumes", Resume2Routes);
+app.use("/resumes", ResumeRoutes);
 
 app.all(/.*/, (req, res) => {
     res.status(404);
