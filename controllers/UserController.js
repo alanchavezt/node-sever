@@ -96,7 +96,10 @@ const getUser = async (req, res) => {
 
     // TODO: figure out which way to use for finding user, either the _id or id field
     // const user = await User.findOne({ _id: req.params.id }).exec();
-    const user = await User.findOne({ id: req.params.id }).populate("roles");
+    const user = await User.findOne({ id: req.params.id })
+        .select('-password -refreshToken')
+        .populate("roles");
+
     if (!user) {
         return res.status(204).json({ "message": `User ID ${req.params.id} not found` });
     }
