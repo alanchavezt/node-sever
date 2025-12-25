@@ -14,6 +14,7 @@ const connectDB = require("./config/dbConn");
 
 const employeeRoutes = require("./routes/api/employees");
 const roleRoutes = require("./routes/api/roleRoutes");
+const profileRoutes = require("./routes/api/profileRoutes");
 const userRoutes = require("./routes/api/userRoutes");
 const userPasswordRoutes = require("./routes/api/userPasswordRoutes");
 const userRoleRoutes = require("./routes/api/userRoleRoutes");
@@ -60,6 +61,7 @@ app.use("/api", PublicResumeRoutes);
 app.use(verifyJWT);
 app.use("/employees", employeeRoutes);
 app.use("/roles", roleRoutes);
+app.use("/profiles", profileRoutes);
 app.use("/users", userRoutes);
 app.use("/users", userPasswordRoutes);
 app.use("/users", userRoleRoutes);
