@@ -6,7 +6,7 @@ const handleRefreshToken = async (req, res) => {
     if (!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
 
-    const foundUser = await User.findOne({ refreshToken }).exec();
+    const foundUser = await User.findOne({ refreshToken }).populate("roles").exec();
     if (!foundUser) return res.sendStatus(403); //Forbidden
 
     // evaluate jwt
@@ -14,7 +14,9 @@ const handleRefreshToken = async (req, res) => {
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
-            if (err || foundUser.username !== decoded.username) return res.sendStatus(403);
+            // TODO: fix this check. we need to add username to decoded user, so the username can exist there. There is only the user email for now
+            // if (err || foundUser.username !== decoded.username) return res.sendStatus(403);
+            if (err || foundUser.email !== decoded.email) return res.sendStatus(403);
             const user = {
                 "firstName": foundUser.firstName,
                 "lastName": foundUser.lastName,
