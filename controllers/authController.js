@@ -1,9 +1,9 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-const crypto = require('crypto');
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-const { createVerificationToken } = require('../helpers/tokens');
-const { sendVerificationEmail } = require('../helpers/email');
+const { createVerificationToken } = require("../helpers/tokens");
+const { sendVerificationEmail } = require("../helpers/email");
 
 const VERIFICATION_TOKEN_EXPIRES_MIN = process.env.VERIFICATION_TOKEN_EXPIRES_MIN ? Number(process.env.VERIFICATION_TOKEN_EXPIRES_MIN) : 60 * 24; // fallback to 24h
 
@@ -54,7 +54,10 @@ const handleLogin = async (req, res) => {
     );
 
     const refreshToken = jwt.sign(
-        { "email": foundUser.email },
+        {
+            "email": foundUser.email,
+            "username": foundUser.username
+        },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: "1d" }
     );
@@ -101,9 +104,9 @@ const verifyEmail = async (req, res) => {
     try {
         const { token, id } = req.query; // or req.body for POST
 
-        if (!token || !id) return res.status(400).json({ message: 'Invalid verification link' });
+        if (!token || !id) return res.status(400).json({ message: "Invalid verification link" });
 
-        const hashed = crypto.createHash('sha256').update(token).digest('hex');
+        const hashed = crypto.createHash("sha256").update(token).digest("hex");
 
         // Find user by uuid (id) and hashed token and expiry
         const user = await User.findOne({
@@ -113,7 +116,7 @@ const verifyEmail = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(400).json({ message: 'Verification link is invalid or has expired' });
+            return res.status(400).json({ message: "Verification link is invalid or has expired" });
         }
 
         user.isEmailVerified = true;
@@ -135,16 +138,16 @@ const verifyEmail = async (req, res) => {
 const resendVerification = async (req, res) => {
     try {
         const { email } = req.body;
-        if (!email) return res.status(400).json({ message: 'Email required' });
+        if (!email) return res.status(400).json({ message: "Email required" });
 
-        const user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } });
-        if (!user) return res.status(404).json({ message: 'User not found' });
-        if (user.isEmailVerified) return res.status(400).json({ message: 'Email already verified' });
+        const user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, "i") } });
+        if (!user) return res.status(404).json({ message: "User not found" });
+        if (user.isEmailVerified) return res.status(400).json({ message: "Email already verified" });
 
         // Rate limiting: basic cooldown check
         if (user.emailVerificationExpiresAt && user.emailVerificationExpiresAt > Date.now() - 5 * 60 * 1000) {
             // e.g., don't resend more than once per 5 minutes
-            return res.status(429).json({ message: 'Too many requests. Try again later.' });
+            return res.status(429).json({ message: "Too many requests. Try again later." });
         }
 
         const { token, hashed } = createVerificationToken();
@@ -154,10 +157,10 @@ const resendVerification = async (req, res) => {
 
         await sendVerificationEmail({ to: user.email, token, userId: user.id, name: user.firstName });
 
-        res.json({ message: 'Verification email sent' });
+        res.json({ message: "Verification email sent" });
     } catch (err) {
         console.error("resendVerification", err);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 

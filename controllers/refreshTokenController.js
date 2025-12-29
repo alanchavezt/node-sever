@@ -14,9 +14,7 @@ const handleRefreshToken = async (req, res) => {
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
-            // TODO: fix this check. we need to add username to decoded user, so the username can exist there. There is only the user email for now
-            // if (err || foundUser.username !== decoded.username) return res.sendStatus(403);
-            if (err || foundUser.email !== decoded.email) return res.sendStatus(403);
+            if (err || foundUser.username !== decoded.username || foundUser.email !== decoded.email) return res.sendStatus(403);
             const user = {
                 "id": foundUser.id,
                 "firstName": foundUser.firstName,
@@ -28,6 +26,7 @@ const handleRefreshToken = async (req, res) => {
             const accessToken = jwt.sign(
                 {
                     "UserInfo": {
+                        "id": foundUser.id,
                         "firstName": decoded.firstName,
                         "lastName": decoded.lastName,
                         "email": decoded.email,
