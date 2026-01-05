@@ -1,7 +1,7 @@
 const Skill = require("../models/Skill");
 const Resume = require("../models/Resume");
 
-const SKILL_LEVELS = ["novice", "beginner", "skillful", "experienced", "expert"];
+const SKILL_LEVELS = require("../constants/skillLevels");
 
 const updateSkills = async (req, res) => {
     try {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { v4: uuidV4 } = require("uuid");
 
-const SKILL_LEVELS = ["novice", "beginner", "skillful", "experienced", "expert"];
+const SKILL_LEVELS = require("../constants/skillLevels");
 
 const SkillSchema = new mongoose.Schema({
     id: { type: String, default: uuidV4, required: true, unique: true },

@@ -1,0 +1,1 @@
+module.exports = ["novice", "beginner", "skillful", "experienced", "expert"];
