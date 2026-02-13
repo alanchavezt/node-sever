@@ -19,20 +19,25 @@ class GeminiProvider extends AIProvider {
 	async chat(messages, options = {}) {
 		const temperature = options.temperature ?? 0.3;
 
-		const prompt = messages
-			.map((m) => `${m.role.toUpperCase()}: ${m.content}`)
-			.join("\n");
+		const systemMessage = messages.find(m => m.role === "system");
+
+		const conversation = messages
+			.filter(m => m.role !== "system")
+			.map(m => ({
+				role: m.role === "assistant" ? "model" : "user",
+				parts: [{ text: m.content }],
+			}));
+
+		if (!conversation.length) {
+			throw new Error("Conversation cannot be empty");
+		}
 
 		const response = await this.client.models.generateContent({
 			model: this.model,
-			contents: [
-				{
-					role: "user",
-					parts: [{ text: prompt }],
-				},
-			],
+			contents: conversation,
 			config: {
 				temperature,
+				systemInstruction: systemMessage?.content,
 			},
 		});
 
