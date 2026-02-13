@@ -1,5 +1,5 @@
 const aiProvider = require("../services/ai");
-const { fetchResumeById } = require("../services/resumeService");
+const { fetchResumeById } = require("../services/ResumeService");
 
 const REQUIRED_REFUSAL = "I'm sorry, I can only answer questions related to the provided resume.";
 
