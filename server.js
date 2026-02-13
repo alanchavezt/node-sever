@@ -21,6 +21,7 @@ const userRoleRoutes = require("./routes/api/userRoleRoutes");
 const PublicResumeRoutes = require("./routes/api/PublicResumeRoutes");
 const ResumeRoutes = require("./routes/api/ResumeRoutes");
 const UserResumeRoutes = require("./routes/api/UserResumeRoutes");
+const AIChatRoutes = require("./routes/api/AIChatRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -57,6 +58,7 @@ app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
 app.use("/api", PublicResumeRoutes);
+app.use("/api", AIChatRoutes);
 
 app.use(verifyJWT);
 app.use("/employees", employeeRoutes);
